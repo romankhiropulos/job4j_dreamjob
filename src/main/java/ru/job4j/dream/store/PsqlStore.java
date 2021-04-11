@@ -138,7 +138,7 @@ public class PsqlStore implements Store {
 
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE uuid = ?")
+             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?")
         ) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
@@ -152,7 +152,7 @@ public class PsqlStore implements Store {
 
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name = ? WHERE uuid = ?")
+             PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name = ? WHERE id = ?")
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
