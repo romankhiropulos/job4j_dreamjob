@@ -1,6 +1,8 @@
 package ru.job4j.dream.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
@@ -9,7 +11,6 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.Properties;
 public class PsqlStore implements Store {
 
     private final BasicDataSource pool = new BasicDataSource();
+
+    private static final Logger LOG = LoggerFactory.getLogger(PsqlStore.class.getName());
 
     private PsqlStore() {
         Properties cfg = new Properties();
@@ -62,7 +65,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
         return posts;
     }
@@ -79,7 +82,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
         return candidates;
     }
@@ -114,7 +117,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
         return post;
     }
@@ -131,7 +134,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
         return candidate;
     }
@@ -142,11 +145,9 @@ public class PsqlStore implements Store {
         ) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
-            if (ps.executeUpdate() != 1) {
-                throw new SQLException("Post with id: " + post.getId() + " not found!");
-            }
+            ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
     }
 
@@ -156,11 +157,9 @@ public class PsqlStore implements Store {
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
-            if (ps.executeUpdate() != 1) {
-                throw new SQLException("Candidate with id: " + candidate.getId() + " not found!");
-            }
+            ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
     }
 
@@ -170,13 +169,13 @@ public class PsqlStore implements Store {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id = ?")) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
-                throw new SQLException("Post with id: " + id + " not found!");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    post = new Post(id, rs.getString("name"));
+                }
             }
-            post = new Post(id, rs.getString("name"));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
         return post;
     }
@@ -187,13 +186,13 @@ public class PsqlStore implements Store {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate WHERE id = ?")) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
-                throw new SQLException("Candidate with id: " + id + " not found!");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    candidate = new Candidate(id, rs.getString("name"));
+                }
             }
-            candidate = new Candidate(id, rs.getString("name"));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception: " + e.getMessage());
         }
         return candidate;
     }
