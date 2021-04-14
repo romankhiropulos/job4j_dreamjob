@@ -1,12 +1,24 @@
 package ru.job4j.dream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.store.PsqlStore;
 import ru.job4j.dream.store.Store;
 
 public class PsqlMain {
+    private static final Logger LOG = LoggerFactory.getLogger(PsqlMain.class.getName());
+
     public static void main(String[] args) {
+        try {
+            int a = 1;
+            a = a / (a - 1);
+            System.out.println(a);
+        } catch (ArithmeticException e) {
+            LOG.error("Exception: " + e.getMessage(), e);
+        }
+
         Store store = PsqlStore.instOf();
         store.save(new Post(0, "Java Job"));
         Post post1 = null;
