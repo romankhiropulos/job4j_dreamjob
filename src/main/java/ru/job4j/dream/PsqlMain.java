@@ -7,6 +7,8 @@ import ru.job4j.dream.model.Post;
 import ru.job4j.dream.store.PsqlStore;
 import ru.job4j.dream.store.Store;
 
+import java.io.File;
+
 public class PsqlMain {
     private static final Logger LOG = LoggerFactory.getLogger(PsqlMain.class.getName());
 
@@ -36,5 +38,9 @@ public class PsqlMain {
 
         System.out.println(post1.getId() + " " + post1.getName());
         System.out.println(candidate1.getId() + " " + candidate1.getName());
+
+        for (File file : new File("c:\\images\\").listFiles()) {
+            System.out.println(file.getAbsolutePath());
+        }
     }
 }
