@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ru.job4j.dream.model.Candidate" %><%--
   Created by IntelliJ IDEA.
   User: roman
   Date: 05.04.2021
@@ -41,13 +41,14 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
+                        <th scope="col">Имена</th>
+                        <th scope="col">Фото</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="candidate">
-                    <!-- Работает и без  useBean, но зато теперь есть автодополнение.
-                         Также далее переменную candidate мы сможем использовать в java-вставках. -->
+                        <!-- Работает и без useBean, но зато теперь есть автодополнение.
+                        Также далее переменную candidate мы сможем использовать в java-вставках. -->
                         <jsp:useBean id="candidate" type="ru.job4j.dream.model.Candidate"/>
                         <tr>
                             <td>
@@ -55,6 +56,18 @@
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <a href='<c:url value="/candidate/photoupload.jsp?imgName=${candidate.id}"/>'>Добавить</a> |
+                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>Удалить</a>
+                                    <%-- Имя файла-картинки соответсвует id кандидата--%>
+                                <%
+                                    String fileName = String.valueOf(candidate.getId()).concat(".png");
+                                %>
+<%--                                <img src="<c:url value='/download?name=<%= fileName%>'/>" width="100px" height="100px"/>--%>
+<%--                                <img src='<c:url value="/download?name=<%=fileName%>"/>' width="100px" height="100px"/>--%>
+                                <img src="<%=request.getContextPath()%>/download?name=<%=fileName%>" width="100px" height="100px"/>
+<%--                                <form action="<%=request.getContextPath()%>/candidate.do?id=<%=candidate.getId()%>" method="post">--%>
                             </td>
                         </tr>
                     </c:forEach>
