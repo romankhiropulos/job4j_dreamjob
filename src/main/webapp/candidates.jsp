@@ -58,13 +58,22 @@
                                 <c:out value="${candidate.name}"/>
                             </td>
                             <td>
-                                <a href='<c:url value="/candidate/photoupload.jsp?imgName=${candidate.id}"/>'>Добавить</a> |
-                                <a href='<c:url value="/uploadphoto?imgName=${candidate.id}"/>'>Удалить</a>
+                                <form action="<%=request.getContextPath()%>/candidate/photoupload.jsp">
+                                    <input type="hidden" name="imgName" value="${candidate.id}"/>
+                                    <button type="submit">Добавить</button>
+                                </form>
+                                <form action="<%=request.getContextPath()%>/uploadphoto">
+                                    <input type="hidden" name="imgName" value="${candidate.id}"/>
+                                    <button type="submit">Удалить</button>
+                                </form>
+                            </td>
+                            <td>
                                     <%-- Имя файла-картинки соответсвует id кандидата--%>
                                 <%
                                     String fileName = String.valueOf(candidate.getId()).concat(".png");
                                 %>
-                                <img src="<%=request.getContextPath()%>/download?name=<%=fileName%>" width="100px" height="100px"/>
+                                <img src="<%=request.getContextPath()%>/download?name=<%=fileName%>" width="100px"
+                                     height="100px"/>
                             </td>
                         </tr>
                     </c:forEach>
