@@ -52,20 +52,26 @@
                         <jsp:useBean id="candidate" type="ru.job4j.dream.model.Candidate"/>
                         <tr>
                             <td>
-                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
-                                    <i class="fa fa-edit mr-3"></i>
-                                </a>
-                                <c:out value="${candidate.name}"/>
+                                <ul class="fa-ul">
+                                    <li>
+                                        <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
+                                            <i class="fa fa-edit mr-3"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href='<c:url value="/candidate/photoupload.jsp?imgName=${candidate.id}"/>'>
+                                            <i class="fa fa-camera mr-3"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href='<c:url value="/candidate.do?id=${candidate.id}"/>'>
+                                            <i class="fa fa-trash mr-3"></i>
+                                        </a>
+                                    </li>
+                                </ul>
                             </td>
                             <td>
-                                <form action="<%=request.getContextPath()%>/candidate/photoupload.jsp">
-                                    <input type="hidden" name="imgName" value="${candidate.id}"/>
-                                    <button type="submit">Добавить</button>
-                                </form>
-                                <form action="<%=request.getContextPath()%>/uploadphoto">
-                                    <input type="hidden" name="imgName" value="${candidate.id}"/>
-                                    <button type="submit">Удалить</button>
-                                </form>
+                                <c:out value="${candidate.name}"/>
                             </td>
                             <td>
                                     <%-- Имя файла-картинки соответсвует id кандидата--%>
@@ -75,6 +81,22 @@
                                 <img src="<%=request.getContextPath()%>/download?name=<%=fileName%>" width="100px"
                                      height="100px"/>
                             </td>
+<%--                            <td>--%>
+<%--                                <ul class="fa-ul">--%>
+<%--                                    <li>--%>
+<%--                                        <a class="btn btn-pencil"--%>
+<%--                                           href="<%=request.getContextPath()%>/candidate/photoupload.jsp?imgName=${candidate.id}">--%>
+<%--                                            <i class="fa fa-pencil"></i>--%>
+<%--                                        </a>--%>
+<%--                                    </li>--%>
+<%--                                    <li>--%>
+<%--                                        <a class="btn btn-trash"--%>
+<%--                                           href="<%=request.getContextPath()%>/uploadphoto?imgName=${candidate.id}">--%>
+<%--                                            <i class="fa fa-trash"></i>--%>
+<%--                                        </a>--%>
+<%--                                    </li>--%>
+<%--                                </ul>--%>
+<%--                            </td>--%>
                         </tr>
                     </c:forEach>
                     </tbody>

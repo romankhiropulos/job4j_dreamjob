@@ -105,9 +105,23 @@ public class PsqlStore implements Store {
         }
     }
 
+    @Override
+    public void delete(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE FROM candidate WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (Exception e) {
+            LOG.error("Exception: " + e.getMessage(), e);
+        }
+    }
+
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement(
+                     "INSERT INTO post(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS
+             )
         ) {
             ps.setString(1, post.getName());
             ps.execute();
