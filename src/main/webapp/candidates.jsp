@@ -59,15 +59,12 @@
                             </td>
                             <td>
                                 <a href='<c:url value="/candidate/photoupload.jsp?imgName=${candidate.id}"/>'>Добавить</a> |
-                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>Удалить</a>
+                                <a href='<c:url value="/uploadphoto?imgName=${candidate.id}"/>'>Удалить</a>
                                     <%-- Имя файла-картинки соответсвует id кандидата--%>
                                 <%
                                     String fileName = String.valueOf(candidate.getId()).concat(".png");
                                 %>
-<%--                                <img src="<c:url value='/download?name=<%= fileName%>'/>" width="100px" height="100px"/>--%>
-<%--                                <img src='<c:url value="/download?name=<%=fileName%>"/>' width="100px" height="100px"/>--%>
                                 <img src="<%=request.getContextPath()%>/download?name=<%=fileName%>" width="100px" height="100px"/>
-<%--                                <form action="<%=request.getContextPath()%>/candidate.do?id=<%=candidate.getId()%>" method="post">--%>
                             </td>
                         </tr>
                     </c:forEach>
