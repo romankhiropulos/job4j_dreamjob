@@ -16,12 +16,12 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) sreq;
         HttpServletResponse resp = (HttpServletResponse) sresp;
         String uri = req.getRequestURI();
-//       Если запрос идет на сервлет авторизации, то проверку делать не будем.
-        if (uri.endsWith("auth.do")) {
+//       Если запрос идет на сервлет авторизации или регистрации, то проверку делать не будем.
+        if (uri.endsWith("auth.do") || uri.endsWith("reg.do")) {
             chain.doFilter(sreq, sresp);
             return;
         }
-//       Для всех остальных запросов мы проверяем текущего пользователя.
+        //       Для всех остальных запросов мы проверяем текущего пользователя.
         if (req.getSession().getAttribute("user") == null) {
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
