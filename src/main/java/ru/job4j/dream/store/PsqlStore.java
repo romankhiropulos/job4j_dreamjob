@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -88,6 +89,11 @@ public class PsqlStore implements Store {
     }
 
     @Override
+    public Collection<User> findAllUsers() {
+        return null;
+    }
+
+    @Override
     public void save(Post post) {
         if (post.getId() == 0) {
             create(post);
@@ -106,7 +112,12 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public void delete(int id) {
+    public void save(User user) {
+
+    }
+
+    @Override
+    public void deleteCandidate(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("DELETE FROM candidate WHERE id = ?")
         ) {
@@ -115,6 +126,11 @@ public class PsqlStore implements Store {
         } catch (Exception e) {
             LOG.error("Exception: " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void deleteUser(String email) {
+
     }
 
     private Post create(Post post) {
@@ -209,5 +225,10 @@ public class PsqlStore implements Store {
             LOG.error("Exception: " + e.getMessage(), e);
         }
         return candidate;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return null;
     }
 }
