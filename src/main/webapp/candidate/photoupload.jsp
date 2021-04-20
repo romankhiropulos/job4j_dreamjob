@@ -23,7 +23,7 @@
     String imgName = request.getParameter("imgName");
 %>
 <div class="container">
-
+    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
     <h2>Upload image</h2>
 <%--    <form action='<c:url value="/uploadphoto?name=<%=imgName%>"/>' method="post" enctype="multipart/form-data">--%>
     <form action="<%=request.getContextPath()%>/uploadphoto?name=<%=imgName%>" method="post" enctype="multipart/form-data">

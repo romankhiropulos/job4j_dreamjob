@@ -20,6 +20,7 @@
 <body>
 
 <div class="container">
+    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
     <table class="table">
         <thead>
         <tr>

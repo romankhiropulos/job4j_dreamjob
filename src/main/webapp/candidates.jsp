@@ -33,6 +33,7 @@
 <div class="container pt-3">
 
     <div class="row">
+        <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Кандидаты
