@@ -5,9 +5,8 @@
   Time: 0:30
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dream.model.Candidate" %>
-<%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -50,6 +49,15 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Войти</button>
                 </form>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <c:if test="${not empty error}">
+                        <div style="color:red; font-weight: bold; margin: 30px 0;">
+                                ${error}
+                        </div>
+                    </c:if>
+                </div>
             </div>
         </div>
     </div>
