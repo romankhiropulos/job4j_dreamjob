@@ -42,5 +42,9 @@ public class PsqlMain {
         for (File file : new File("c:\\images\\").listFiles()) {
             System.out.println(file.getAbsolutePath());
         }
+
+        System.out.println(PsqlStore.instOf().findAllUsers());
+        PsqlStore.instOf().deleteUser("nata@gmail.com");
+        System.out.println(PsqlStore.instOf().findAllUsers());
     }
 }

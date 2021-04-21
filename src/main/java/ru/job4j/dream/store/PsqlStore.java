@@ -90,7 +90,24 @@ public class PsqlStore implements Store {
 
     @Override
     public Collection<User> findAllUsers() {
-        return null;
+        List<User> users = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    users.add(
+                            new User(it.getInt("id"),
+                                    it.getString("name"),
+                                    it.getString("email"),
+                                    it.getString("password"))
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception: " + e.getMessage(), e);
+        }
+        return users;
     }
 
     @Override
@@ -147,7 +164,14 @@ public class PsqlStore implements Store {
 
     @Override
     public void deleteUser(String email) {
-
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE FROM users WHERE email = ?")
+        ) {
+            ps.setString(1, email);
+            ps.execute();
+        } catch (Exception e) {
+            LOG.error("Exception: " + e.getMessage(), e);
+        }
     }
 
     private Post create(Post post) {
