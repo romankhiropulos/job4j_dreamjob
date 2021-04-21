@@ -17,17 +17,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class UploadPhotoServlet extends HttpServlet {
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.setCharacterEncoding("UTF-8");
-//        String nameImg = req.getParameter("imgName");
-//        if (nameImg != null) {
-//            File fileDel = new File("c:\\images\\".concat(nameImg).concat(".png"));
-//            fileDel.delete();
-//        }
-//        req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
-//        req.getRequestDispatcher("candidates.jsp").forward(req, resp);
-//    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

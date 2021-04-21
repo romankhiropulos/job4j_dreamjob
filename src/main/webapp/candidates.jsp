@@ -48,8 +48,6 @@
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="candidate">
-                        <!-- Работает и без useBean, но зато теперь есть автодополнение.
-                        Также далее переменную candidate мы сможем использовать в java-вставках. -->
                         <jsp:useBean id="candidate" type="ru.job4j.dream.model.Candidate"/>
                         <tr>
                             <td>
@@ -75,29 +73,12 @@
                                 <c:out value="${candidate.name}"/>
                             </td>
                             <td>
-                                    <%-- Имя файла-картинки соответсвует id кандидата--%>
                                 <%
                                     String fileName = String.valueOf(candidate.getId()).concat(".png");
                                 %>
                                 <img src="<%=request.getContextPath()%>/download?name=<%=fileName%>" width="100px"
                                      height="100px"/>
                             </td>
-<%--                            <td>--%>
-<%--                                <ul class="fa-ul">--%>
-<%--                                    <li>--%>
-<%--                                        <a class="btn btn-pencil"--%>
-<%--                                           href="<%=request.getContextPath()%>/candidate/photoupload.jsp?imgName=${candidate.id}">--%>
-<%--                                            <i class="fa fa-pencil"></i>--%>
-<%--                                        </a>--%>
-<%--                                    </li>--%>
-<%--                                    <li>--%>
-<%--                                        <a class="btn btn-trash"--%>
-<%--                                           href="<%=request.getContextPath()%>/uploadphoto?imgName=${candidate.id}">--%>
-<%--                                            <i class="fa fa-trash"></i>--%>
-<%--                                        </a>--%>
-<%--                                    </li>--%>
-<%--                                </ul>--%>
-<%--                            </td>--%>
                         </tr>
                     </c:forEach>
                     </tbody>
