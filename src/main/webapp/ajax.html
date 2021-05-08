@@ -15,10 +15,12 @@
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080//job4j_dreamjob/greet',
-            data: 'name=' + $('#exampleInputEmail1').val(),
+            data:  {email : $('#exampleInputEmail1').val()},
             dataType: 'text'
-        }).done(function(data) {
-            $('#labelInput1').before(`${data}<p></p>`);
+        }).done(function(respData) {
+            let jsonObj = JSON.parse(respData);
+            let email = jsonObj.email;
+            $('#labelInput1').before(`<p>${email}</p>`);
         }).fail(function(err){
             alert(err);
         });

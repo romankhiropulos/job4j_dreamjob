@@ -1,9 +1,12 @@
 package ru.job4j.dream;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 import ru.job4j.dream.store.PsqlStore;
 import ru.job4j.dream.store.Store;
 
@@ -46,5 +49,19 @@ public class PsqlMain {
         System.out.println(PsqlStore.instOf().findAllUsers());
         PsqlStore.instOf().deleteUser("nata@gmail.com");
         System.out.println(PsqlStore.instOf().findAllUsers());
+//        gsonCheck();
     }
+
+    private static void gsonCheck() {
+        String email = "email777";
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+
+        Gson gson = builder.create();
+        String jsonResponse = gson.toJson(new User(1, "Danna", email, "password"), User.class);
+
+        System.out.println(jsonResponse);
+    }
+
 }
