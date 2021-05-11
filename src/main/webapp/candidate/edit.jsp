@@ -60,10 +60,10 @@
                         <label for="citySelect">Выберете город: </label>
                         <select id="citySelect">
                             <script>
-                                function showCities() {
+                                 // function showCities() {
                                     $.ajax({
                                         type: "GET",
-                                        url: "<%=request.getContextPath()%>/cities",
+                                        url: 'http://localhost:8080//job4j_dreamjob/cities',
                                         dataType: "json",
                                         success: function (respData) {
                                             let cities = "";
@@ -77,7 +77,7 @@
                                             alert(err);
                                         }
                                     })
-                                }
+                                // }
                             </script>
                         </select>
                         <%--                        <select id="citySelect">--%>
