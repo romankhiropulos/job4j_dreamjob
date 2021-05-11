@@ -8,6 +8,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
+<%@ page import="ru.job4j.dream.model.City" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -28,13 +29,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <title>Работа мечты</title>
 </head>
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
+    Candidate candidate = new Candidate(0, "", "unknown");
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
@@ -55,6 +57,37 @@
                     <div class="form-group">
                         <label>Имя</label>
                         <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <label for="citySelect">Выберете город: </label>
+                        <select id="citySelect">
+                            <script>
+                                function showCities() {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "<%=request.getContextPath()%>/cities",
+                                        dataType: "json",
+                                        success: function (respData) {
+                                            let cities = "";
+                                            let jsonObj = JSON.parse(respData);
+                                            for (let i = 0; i < jsonObj.length; i++) {
+                                                // cities += "<option value=" + jsonObj[i]['id'] + ">" + jsonObj[i]['name'] + "</option>";
+                                                document.write("<option value=" + jsonObj[i].id + ">" + jsonObj[i].name + "</option>");
+                                            }
+                                        },
+                                        error: function(err) {
+                                            alert(err);
+                                        }
+                                    })
+                                }
+                            </script>
+                        </select>
+                        <%--                        <select id="citySelect">--%>
+                        <%--                            <script>--%>
+                        <%--                                let myArray = ["1", "2", "3", "4", "5"];--%>
+                        <%--                                for (let i = 0; i < myArray.length; i++) {--%>
+                        <%--                                    document.write('<option value="' + myArray[i] + '">' + myArray[i] + '</option>');--%>
+                        <%--                                }--%>
+                        <%--                            </script>--%>
+                        <%--                        </select>--%>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

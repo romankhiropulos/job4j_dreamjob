@@ -29,10 +29,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
+<%--    При написании в событии "onclick" слова "return" - onclick="return validate()"
+        мы прекращаем выполнение основного действия формы(перенаправления на href = ...reg.do),
+        предотвращание отправки некорректно введенных данных на сервлет, если validate() вернет false --%>
         function validate() {
 
             let valid = true;
-
             let name = document.getElementById('name').value;
             let email = document.getElementById('email').value;
             let password = document.getElementById('password').value;
@@ -40,6 +42,7 @@
             if (name === '') {
                 valid = false;
                 alert("Пожалуйста заполните поле \"Имя\"");
+                this.event.preventDefault();
             } else if (email === '') {
                 valid = false;
                 alert("Пожалуйста заполните поле \"Почта\"");
@@ -47,7 +50,6 @@
                 valid = false;
                 alert("Пожалуйста заполните поле \"Пароль\"");
             }
-
             return valid;
         }
 
@@ -77,7 +79,7 @@
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password" id="password">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="validate()">Войти</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Войти</button>
                 </form>
             </div>
             <div class="container">

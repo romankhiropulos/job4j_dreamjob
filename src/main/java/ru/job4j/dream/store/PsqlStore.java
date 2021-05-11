@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
@@ -79,7 +80,12 @@ public class PsqlStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(
+                            new Candidate(it.getInt("id"),
+                                          it.getString("name"),
+                                          it.getString("city")
+                            )
+                    );
                 }
             }
         } catch (Exception e) {
@@ -108,6 +114,27 @@ public class PsqlStore implements Store {
             LOG.error("Exception: " + e.getMessage(), e);
         }
         return users;
+    }
+
+    @Override
+    public Collection<City> findAllCities() {
+        List<City> cities = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM city")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    cities.add(
+                            new City(it.getInt("id"),
+                                    it.getString("name")
+                            )
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception: " + e.getMessage(), e);
+        }
+        return cities;
     }
 
     @Override
@@ -195,9 +222,12 @@ public class PsqlStore implements Store {
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement(
+                     "INSERT INTO candidate(name, city) VALUES (?, ?)",
+                          PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setString(2, candidate.getCity().getName());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -224,10 +254,13 @@ public class PsqlStore implements Store {
 
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name = ? WHERE id = ?")
+             PreparedStatement ps = cn.prepareStatement("UPDATE candidate SET name =  ?,"
+                                                                               + "city = ?"
+                                                                               + "WHERE id = ?")
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
+            ps.setString(2, candidate.getCity().getName());
+            ps.setInt(3, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             LOG.error("Exception: " + e.getMessage(), e);
@@ -259,7 +292,7 @@ public class PsqlStore implements Store {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    candidate = new Candidate(id, rs.getString("name"));
+                    candidate = new Candidate(id, rs.getString("name"), rs.getString("city"));
                 }
             }
         } catch (Exception e) {

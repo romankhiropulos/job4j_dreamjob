@@ -32,7 +32,6 @@
         function validate() {
 
             let valid = true;
-
             let email = document.getElementById('email').value;
             let password = document.getElementById('password').value;
 
@@ -46,7 +45,6 @@
 
             return valid;
         }
-
     </script>
 
     <title>Работа мечты</title>
@@ -71,7 +69,7 @@
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password" id="password">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="validate()">Войти</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Войти</button>
                 </form>
             </div>
             <div class="container">
