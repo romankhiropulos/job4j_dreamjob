@@ -31,6 +31,27 @@
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: 'http://localhost:8080//job4j_dreamjob/cities',
+                dataType: "json",
+                success: function (respData) {
+                    let cities = "";
+                    for (let i = 0; i < respData.length; i++) {
+                         cities += "<option value=" + respData[i]['id'] + ">" + respData[i]['name'] + "</option>";
+                        // cities += "<option>" + respData[i]['name'] + "</option>";
+                    }
+                    $('#citySelect').html(cities);
+                },
+                error: function(err) {
+                    alert(err);
+                }
+            })
+        })
+    </script>
+
     <title>Работа мечты</title>
 </head>
 <body>
@@ -58,36 +79,7 @@
                         <label>Имя</label>
                         <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
                         <label for="citySelect">Выберете город: </label>
-                        <select id="citySelect">
-                            <script>
-                                 // function showCities() {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: 'http://localhost:8080//job4j_dreamjob/cities',
-                                        dataType: "json",
-                                        success: function (respData) {
-                                            let cities = "";
-                                            let jsonObj = JSON.parse(respData);
-                                            for (let i = 0; i < jsonObj.length; i++) {
-                                                // cities += "<option value=" + jsonObj[i]['id'] + ">" + jsonObj[i]['name'] + "</option>";
-                                                document.write("<option value=" + jsonObj[i].id + ">" + jsonObj[i].name + "</option>");
-                                            }
-                                        },
-                                        error: function(err) {
-                                            alert(err);
-                                        }
-                                    })
-                                // }
-                            </script>
-                        </select>
-                        <%--                        <select id="citySelect">--%>
-                        <%--                            <script>--%>
-                        <%--                                let myArray = ["1", "2", "3", "4", "5"];--%>
-                        <%--                                for (let i = 0; i < myArray.length; i++) {--%>
-                        <%--                                    document.write('<option value="' + myArray[i] + '">' + myArray[i] + '</option>');--%>
-                        <%--                                }--%>
-                        <%--                            </script>--%>
-                        <%--                        </select>--%>
+                        <select id="citySelect" name="citySelect"></select>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

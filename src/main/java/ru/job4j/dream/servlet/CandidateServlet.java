@@ -31,7 +31,7 @@ public class CandidateServlet extends HttpServlet {
                 new Candidate(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name"),
-                        req.getParameter("cityName")
+                        req.getParameter("citySelect")
                 )
         );
         resp.sendRedirect(req.getContextPath() + "/candidate.do");
