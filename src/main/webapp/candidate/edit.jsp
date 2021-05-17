@@ -51,7 +51,18 @@
             })
         })
     </script>
+    <script>
+        function validate() {
+            let valid = true;
+            let name = document.getElementById('name').value;
+            if (name === '') {
+                valid = false;
+                alert("Пожалуйста заполните поле \"Имя\"");
+            }
 
+            return valid;
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
@@ -77,11 +88,12 @@
                 <form action="<%=request.getContextPath()%>/candidate.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
-                        <label for="citySelect">Выберете город: </label>
-                        <select id="citySelect" name="citySelect"></select>
+                        <input type="text" class="form-control" name="name" id="name" value="<%=candidate.getName()%>">
+                        <br>
+                        <label for="citySelect">Город<br></label>
+                        <select class="form-control" id="citySelect" name="citySelect"></select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>
