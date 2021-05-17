@@ -12,19 +12,19 @@
 ## Возможности
 
 *Стартовая страница* <br>
-![alt text](src/main/webapp/images/start.png)
+![alt text](src/main/webapp/images/start.PNG)
 
 *Регистрация или авторизация пользователя* <br>
-![alt text](src/main/webapp/images/regauthuser.png)
+![alt text](src/main/webapp/images/regauthuser.PNG)
 
 *Список вакансий* <br>
-![alt text](src/main/webapp/images/posts.png)
+![alt text](src/main/webapp/images/posts.PNG)
 
 *Список кандидатов* <br>
-![alt text](src/main/webapp/images/candidates.png)
+![alt text](src/main/webapp/images/candidates.PNG)
 
 *Редактирования существующей информации о вакансии или для создания новой* <br>
-![alt text](src/main/webapp/images/editpost.png)
+![alt text](src/main/webapp/images/editpost.PNG)
 
 *Редактирования существующей информации о кандидате или для создания новой* <br>
-![alt text](src/main/webapp/images/editcandidate.png)
+![alt text](src/main/webapp/images/editcandidate.PNG)
