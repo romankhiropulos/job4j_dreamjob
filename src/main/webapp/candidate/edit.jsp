@@ -35,7 +35,7 @@
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: 'http://localhost:8080//job4j_dreamjob/cities',
+                url: 'http://localhost:8080/dreamjob/cities',
                 dataType: "json",
                 success: function (respData) {
                     let cities = "";
